@@ -1,0 +1,23 @@
+{
+  "name": "lighthouse-microservice",
+  "version": "1.0.0",
+  "description": "Microservicio para extraer datos desde lighthouse",
+  "main": "app.js",
+  "scripts": {
+    "start": "server/www",
+    "dev": "nodemon server/www",
+    "test": "test"
+  },
+  "author": "Camilo Alaniz",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chrome-launcher": "^0.11.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.21.1",
+    "lighthouse": "^5.5.0",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.3"
+  }
+}
