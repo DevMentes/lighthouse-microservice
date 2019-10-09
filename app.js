@@ -3,6 +3,8 @@ const parser = require('body-parser');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
+const lighthouse = require("lighthouse");
+const ReportGenerator = require('lighthouse/lighthouse-core/report/report-generator');
 
 const app = express();
 
@@ -20,7 +22,7 @@ app.get('/', (req, res) => {
     });
 });
 
-const lighthouse = require("lighthouse");
+
 const chromeLauncher = require("chrome-launcher");
 
 const  launchChromeAndRunLighthouse = (url, opts, config = null) => {
@@ -36,10 +38,19 @@ const  launchChromeAndRunLighthouse = (url, opts, config = null) => {
     });
   }
 
+  const get = async (url) => {
+    
+    const report = await lighthouse(url, { port: 3000 }, null).then(results => {
+     return results;
+    });
+    return ReportGenerator.generateReport(report.lhr, 'html');
+
+  };
+
 app.get('/report', (request, response) => {
     const {url} = request.body;
     const opts =  {
-        chromeFlags: ['--show-paint-rects']
+        chromeFlags: ['--no-sandbox', '--headless', '--disable-gpu']
       };
     launchChromeAndRunLighthouse(url, opts)
     .then(results => response.json({ data: results }))
