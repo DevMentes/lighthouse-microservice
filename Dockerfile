@@ -4,5 +4,7 @@ COPY package.json .
 RUN npm install --only=prod
 COPY . ./
 EXPOSE 3000
+USER root
 RUN chmod +rwx server/www
+RUN node -v
 CMD ["npm", "run","start"]
